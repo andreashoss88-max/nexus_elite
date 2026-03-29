@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NEXUS COMMAND v16.0 | SCAPION MASTER</title>
+    <title>NEXUS COMMAND | MASTER</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -16,17 +16,11 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-        body { 
-            background: var(--dark); color: #fff; font-family: 'Inter', sans-serif; 
-            overflow-x: hidden; min-height: 100vh;
-        }
+        body { background: var(--dark); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; min-height: 100vh; }
 
-        /* Matrix Background Effect */
-        #bg-canvas { position: fixed; top:0; left:0; z-index: -1; opacity: 0.25; }
-
+        #bg-canvas { position: fixed; top:0; left:0; z-index: -1; opacity: 0.15; }
         .container { width: 100%; max-width: 650px; margin: auto; padding: 25px; }
 
-        /* Typography */
         h1 { 
             font-family: 'Orbitron', sans-serif; font-weight: 900; letter-spacing: 12px; 
             text-transform: uppercase; text-align: center; margin: 40px 0;
@@ -35,61 +29,49 @@
             font-size: 2.2rem; filter: drop-shadow(0 0 15px rgba(197,160,89,0.3));
         }
 
-        /* Status Nodes */
         .status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 30px; }
-        .node { 
-            background: rgba(0,0,0,0.8); border: 1px solid #222; padding: 12px; 
-            border-radius: 12px; text-align: center; transition: 0.4s;
-        }
+        .node { background: rgba(0,0,0,0.8); border: 1px solid #222; padding: 12px; border-radius: 12px; text-align: center; }
         .node span { display: block; font-size: 0.5rem; font-weight: 900; letter-spacing: 2px; color: #333; }
         .node.active { border-color: var(--green); box-shadow: 0 0 15px rgba(0,255,136,0.15); }
         .node.active span { color: var(--green); text-shadow: 0 0 8px var(--green); }
 
-        /* Cards & Navigation */
-        .card { 
-            background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); 
-            border-radius: 25px; padding: 25px; margin-bottom: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-        }
+        .card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; }
         
         .nav { display: flex; gap: 6px; background: #000; padding: 6px; border-radius: 18px; margin-bottom: 25px; border: 1px solid #111; }
-        .nav-btn { 
-            flex: 1; padding: 16px; text-align: center; cursor: pointer; font-size: 0.6rem; 
-            font-weight: 900; text-transform: uppercase; color: #555; border-radius: 14px; transition: 0.3s;
-        }
-        .nav-btn.active { color: #000; background: var(--gold); box-shadow: 0 5px 15px rgba(197,160,89,0.3); }
+        .nav-btn { flex: 1; padding: 16px; text-align: center; cursor: pointer; font-size: 0.6rem; font-weight: 900; text-transform: uppercase; color: #555; border-radius: 14px; }
+        .nav-btn.active { color: #000; background: var(--gold); }
 
-        /* Revenue & Units */
         .rev-val { font-family: 'Orbitron'; font-size: 3.5rem; font-weight: 900; color: var(--gold); text-align: center; margin: 10px 0; }
+        
         .unit-pill { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 18px; border-radius: 15px; background: rgba(255,255,255,0.03); 
-            margin-bottom: 10px; border: 1px solid transparent; cursor: pointer; transition: 0.2s;
+            margin-bottom: 10px; border: 1px solid transparent; cursor: pointer; 
         }
-        .unit-pill:hover { border-color: var(--gold); background: rgba(197,160,89,0.05); }
         .unit-pill.panic { border-color: var(--red); background: rgba(255, 49, 49, 0.1); animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
 
-        /* Inputs & Buttons */
         input, textarea { 
             width: 100%; background: #000; border: 1px solid var(--border); padding: 18px; 
-            border-radius: 15px; color: #fff; margin-top: 12px; font-size: 0.95rem; font-family: 'Inter';
+            border-radius: 15px; color: #fff; margin-top: 12px; font-size: 1rem;
         }
+        
         .btn { 
             width: 100%; padding: 20px; border-radius: 15px; border: none; font-weight: 900; 
-            text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 3px; cursor: pointer;
             font-size: 0.8rem; font-family: 'Orbitron'; margin-top: 15px;
         }
         .btn-gold { background: linear-gradient(135deg, var(--gold-br), var(--gold)); color: #000; }
-        .btn-gold:active { transform: scale(0.98); }
 
-        /* Chat System */
-        .chat-wrap { height: 400px; overflow-y: auto; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 12px 18px; border-radius: 18px; max-width: 85%; font-size: 0.85rem; line-height: 1.5; }
-        .msg-lady { background: #1a1a1a; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid #333; }
-        .msg-boss { background: rgba(197, 160, 89, 0.1); border: 1px solid var(--gold); align-self: flex-end; color: var(--gold-br); border-bottom-right-radius: 2px; }
+        .chat-wrap { height: 350px; overflow-y: auto; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 12px 18px; border-radius: 18px; max-width: 85%; font-size: 0.85rem; }
+        .msg-lady { background: #1a1a1a; align-self: flex-start; }
+        .msg-boss { background: rgba(197, 160, 89, 0.1); border: 1px solid var(--gold); align-self: flex-end; color: var(--gold-br); }
 
-        /* View Management */
         #view-boss, #view-detail { display: none; }
+        
+        /* Error Message Overlay */
+        #error-msg { color: var(--red); font-size: 0.7rem; margin-top: 15px; display: none; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -99,7 +81,8 @@
         <h1>NEXUS</h1>
         <div class="card" style="text-align: center;">
             <input type="password" id="auth-key" placeholder="MASTER ACCESS KEY" style="text-align: center; letter-spacing: 10px;">
-            <button class="btn btn-gold" onclick="handleAuth()">INITIALIZE</button>
+            <div id="error-msg">CODE UNGÜLTIG ODER KEINE VERBINDUNG</div>
+            <button class="btn btn-gold" id="login-btn" onclick="handleAuth()">INITIALIZE</button>
         </div>
     </div>
 
@@ -112,7 +95,7 @@
         <h1>COMMAND</h1>
         <div class="nav">
             <div class="nav-btn active" id="tab-u-btn" onclick="switchTab('u')">Units</div>
-            <div class="nav-btn" id="tab-m-btn" onclick="switchTab('m')">Mail-Engine</div>
+            <div class="nav-btn" id="tab-m-btn" onclick="switchTab('m')">Mail</div>
             <div class="nav-btn" id="tab-f-btn" onclick="switchTab('f')">Imperial</div>
         </div>
 
@@ -120,10 +103,10 @@
 
         <div id="tab-m" style="display:none;">
             <div class="card">
-                <input id="mail-to" placeholder="Empfänger-Email">
-                <input id="mail-sub" placeholder="Betreff (z.B. Branding-Vertrag)">
-                <textarea id="mail-body" style="height:150px;" placeholder="Nachricht an den Lead..."></textarea>
-                <button class="btn btn-gold" onclick="queueMail()">EXECUTE VIA GMX</button>
+                <input id="mail-to" placeholder="An">
+                <input id="mail-sub" placeholder="Betreff">
+                <textarea id="mail-body" style="height:100px;" placeholder="Nachricht..."></textarea>
+                <button class="btn btn-gold" onclick="queueMail()">SEND VIA ENGINE</button>
             </div>
         </div>
 
@@ -131,43 +114,67 @@
             <div class="card" style="text-align:center;">
                 <p style="font-size:0.6rem; letter-spacing:4px; color:#555;">GLOBAL REVENUE</p>
                 <div class="rev-val" id="total-rev">0 €</div>
-                <p style="font-size:0.6rem; color:var(--gold);">20% Commission: <span id="comm-val">0</span> €</p>
+                <p style="font-size:0.7rem; color:var(--gold);">Your 20%: <span id="comm-val">0</span> €</p>
             </div>
         </div>
     </div>
 
     <div id="view-detail" class="container">
-        <button class="btn" style="background:none; color:var(--gold); text-align:left; width:auto; padding:10px;" onclick="backToMain()">← ZURÜCK</button>
-        <h1 id="unit-name-title" style="font-size: 1.5rem; margin-bottom: 20px;">UNIT</h1>
+        <button class="btn" style="background:none; color:var(--gold); text-align:left; width:auto;" onclick="backToMain()">← ZURÜCK</button>
+        <h1 id="unit-name-title" style="font-size: 1.2rem;">UNIT</h1>
         <div class="card">
             <div class="chat-wrap" id="chat-container"></div>
-            <input id="boss-msg-input" placeholder="Direkte Anweisung...">
-            <button class="btn btn-gold" onclick="sendBossMessage()">TRANSMIT</button>
+            <input id="boss-msg-input" placeholder="Anweisung...">
+            <button class="btn btn-gold" onclick="sendBossMessage()">SENDEN</button>
         </div>
     </div>
 
     <script>
-        // DB CONFIG
-        const URL = "https://azjpytibufkcdemreyvn.supabase.co";
-        const KEY = "sb_publishable_S8eDSg6V_b8RlG7WJN8cRA_9z4jnFd9";
+        // --- DEINE DATEN HIER EINTRAGEN ---
+        const URL = "https://azjpytibufkcdemreyvn.supabase.co"; 
+        const KEY = "sb_publishable_S8eDSg6V_b8RlG7WJN8cRA_9z4jnFd9"; 
+        // ----------------------------------
+
         const sb = supabase.createClient(URL, KEY);
-        
         let master = null;
         let selectedUnitId = null;
 
-        // AUTHENTICATION
+        // LOGIN FUNKTION MIT ENTER-SUPPORT & FEEDBACK
         async function handleAuth() {
-            const key = document.getElementById('auth-key').value;
-            const { data, error } = await sb.from('profiles').select('*').eq('nexus_code', key).single();
-            if(data && data.role === 'admin') {
-                master = data;
-                document.getElementById('view-login').style.display = 'none';
-                document.getElementById('view-boss').style.display = 'block';
-                startHeartbeat();
-            } else { alert("ACCESS DENIED"); }
+            const input = document.getElementById('auth-key');
+            const err = document.getElementById('error-msg');
+            const btn = document.getElementById('login-btn');
+            
+            btn.innerText = "CONNECTING...";
+            err.style.display = "none";
+
+            try {
+                const { data, error } = await sb.from('profiles')
+                    .select('*')
+                    .eq('nexus_code', input.value)
+                    .eq('role', 'admin')
+                    .single();
+
+                if (data) {
+                    master = data;
+                    document.getElementById('view-login').style.display = 'none';
+                    document.getElementById('view-boss').style.display = 'block';
+                    startHeartbeat();
+                } else {
+                    throw new Error("Nicht gefunden");
+                }
+            } catch (e) {
+                err.style.display = "block";
+                btn.innerText = "INITIALIZE";
+                input.value = "";
+            }
         }
 
-        // TAB SYSTEM
+        // Enter-Taste im Login-Feld abfangen
+        document.getElementById('auth-key').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') handleAuth();
+        });
+
         function switchTab(t) {
             ['u','m','f'].forEach(tab => {
                 document.getElementById('tab-'+tab).style.display = (t === tab) ? 'block' : 'none';
@@ -175,89 +182,57 @@
             });
         }
 
-        // MAIN LOOP (5s Interval)
         async function startHeartbeat() {
-            // 1. Fetch Units
             const { data: units } = await sb.from('profiles').select('*').neq('role', 'admin');
             let total = 0;
-            document.getElementById('unit-list').innerHTML = units.map(u => {
-                total += u.daily_revenue;
-                return `
-                    <div class="unit-pill ${u.is_panic ? 'panic' : ''}" onclick="openUnit('${u.id}', '${u.name}')">
-                        <div style="display:flex; flex-direction:column;">
-                            <span style="font-weight:900; font-size:0.8rem;">${u.name.toUpperCase()}</span>
-                            <span style="font-size:0.5rem; color:#555;">STATUS: ${u.is_panic ? 'EMERGENCY' : 'STABLE'}</span>
-                        </div>
-                        <span style="color:var(--gold); font-weight:900;">${u.daily_revenue} €</span>
+            if(units) {
+                document.getElementById('unit-list').innerHTML = units.map(u => {
+                    total += u.daily_revenue || 0;
+                    return `<div class="unit-pill ${u.is_panic ? 'panic' : ''}" onclick="openUnit('${u.id}', '${u.name}')">
+                        <b>${u.name.toUpperCase()}</b><span>${u.daily_revenue || 0} €</span>
                     </div>`;
-            }).join('');
+                }).join('');
+            }
 
-            // 2. Update Finance
             document.getElementById('total-rev').innerText = total + " €";
             document.getElementById('comm-val').innerText = (total * 0.2).toFixed(2);
 
-            // 3. Update Engine Status (Pings)
             const { data: pings } = await sb.from('messages').select('content').eq('portal_name', 'SYS_PING');
             document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
-            pings.forEach(p => {
-                const node = document.getElementById('node-' + p.content.toLowerCase());
-                if(node) node.classList.add('active');
-            });
+            if(pings) {
+                pings.forEach(p => {
+                    const node = document.getElementById('node-' + p.content.toLowerCase());
+                    if(node) node.classList.add('active');
+                });
+            }
 
             if(selectedUnitId) refreshChat();
             setTimeout(startHeartbeat, 5000);
         }
 
-        // CHAT & DETAIL LOGIC
         async function openUnit(id, name) {
             selectedUnitId = id;
             document.getElementById('view-boss').style.display = 'none';
             document.getElementById('view-detail').style.display = 'block';
-            document.getElementById('unit-name-title').innerText = name.toUpperCase();
+            document.getElementById('unit-name-title').innerText = name;
             refreshChat();
         }
 
         async function refreshChat() {
             const { data } = await sb.from('messages').select('*').eq('lady_id', selectedUnitId).order('created_at', {ascending: true});
-            const cont = document.getElementById('chat-container');
-            cont.innerHTML = data.map(m => `
-                <div class="msg ${m.direction === 'in' ? 'msg-lady' : 'msg-boss'}">
-                    ${m.content}
-                </div>
-            `).join('');
-            cont.scrollTop = cont.scrollHeight;
+            if(data) {
+                document.getElementById('chat-container').innerHTML = data.map(m => `
+                    <div class="msg ${m.direction === 'in' ? 'msg-lady' : 'msg-boss'}">${m.content}</div>
+                `).join('');
+                const c = document.getElementById('chat-container'); c.scrollTop = c.scrollHeight;
+            }
         }
 
         async function sendBossMessage() {
-            const input = document.getElementById('boss-msg-input');
-            if(!input.value) return;
-            await sb.from('messages').insert([{
-                lady_id: selectedUnitId,
-                content: input.value,
-                direction: 'out',
-                portal_name: 'BOSS_DASH'
-            }]);
-            input.value = '';
-            refreshChat();
-        }
-
-        // MAIL LOGIC
-        async function queueMail() {
-            const payload = {
-                to: document.getElementById('mail-to').value,
-                sub: document.getElementById('mail-sub').value,
-                body: document.getElementById('mail-body').value
-            };
-            await sb.from('messages').insert([{
-                portal_name: 'SYS_MAIL',
-                content: JSON.stringify(payload),
-                direction: 'out',
-                is_sent: false
-            }]);
-            alert("MAIL IN QUEUE - ENGINE WILL PROCESS...");
-            document.getElementById('mail-to').value = '';
-            document.getElementById('mail-sub').value = '';
-            document.getElementById('mail-body').value = '';
+            const i = document.getElementById('boss-msg-input');
+            if(!i.value) return;
+            await sb.from('messages').insert([{ lady_id: selectedUnitId, content: i.value, direction: 'out', portal_name: 'BOSS' }]);
+            i.value = ''; refreshChat();
         }
 
         function backToMain() {
@@ -266,26 +241,21 @@
             document.getElementById('view-boss').style.display = 'block';
         }
 
-        // MATRIX BACKGROUND LOGIC
+        // MATRIX BG
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const columns = Math.floor(canvas.width / 20);
-        const drops = new Array(columns).fill(1);
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#c5a059';
-            ctx.font = '15px monospace';
-            for (let i = 0; i < drops.length; i++) {
-                const text = Math.floor(Math.random() * 10);
-                ctx.fillText(text, i * 20, drops[i] * 20);
-                if (drops[i] * 20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const drops = new Array(Math.floor(canvas.width / 20)).fill(1);
+        function draw() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#c5a059'; ctx.font = '15px monospace';
+            drops.forEach((y, i) => {
+                ctx.fillText(Math.floor(Math.random()*10), i*20, y*20);
+                if(y*20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
-            }
+            });
         }
-        setInterval(drawMatrix, 50);
+        setInterval(draw, 50);
     </script>
 </body>
 </html>
